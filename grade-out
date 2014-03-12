@@ -1,0 +1,54 @@
+1234 decimal is 2322 octal!
+ebp:106ee8  eip:1005f0  args: 0 106f28 0 
+ebp:106f08  eip:100628  args: 0 106f28 0 
+ebp:106fd8  eip:100661  args: 0 106f28 0 
+ebp:106ff8  eip:1000e8  args: 103978 4d2 1a54 
+ebp:0  eip: 100024  args: 876007ff 10 0 
+ebp:106ee8  eip:1005f0  args: 1 106f50 0 
+ebp:106f08  eip:100614  args: 1 106f50 0 
+ebp:106fd8  eip:100661  args: 1 106f50 0 
+ebp:106ff8  eip:1000e8  args: 103978 4d2 1a54 
+ebp:0  eip: 100024  args: 876007ff 10 0 
+ebp:106ee8  eip:1005dc  args: 2 106f78 0 
+ebp:106f08  eip:100628  args: 2 106f78 0 
+ebp:106fd8  eip:100661  args: 2 106f78 0 
+ebp:106ff8  eip:1000e8  args: 103978 4d2 1a54 
+ebp:0  eip: 100024  args: 876007ff 10 0 
+ebp:106ee8  eip:1005dc  args: 3 106fa0 0 
+ebp:106f08  eip:100614  args: 3 106fa0 0 
+ebp:106fd8  eip:100661  args: 3 106fa0 0 
+ebp:106ff8  eip:1000e8  args: 103978 4d2 1a54 
+ebp:0  eip: 100024  args: 876007ff 10 0 
+debug_check() succeeded!
+
+Divide by Zero error handled
+
+BreakPoint error handled
+
+Overflow error handled
+
+Bound error handled
+
+Invalid opcode handled
+
+General Segment fault handled
+endtrap_check_kernel() succeeded!
+Physical memory: 66556K available, base = 640K, extended = 65532K
+mem_check: 16499 free pages
+mem_check() succeeded!
+in user()
+
+Divide by Zero error handled
+
+BreakPoint error handled
+
+Overflow error handled
+
+Bound error handled
+
+Invalid opcode handled
+
+General Segment fault handled
+
+General Segment fault handled
+endtrap_check_user() succeeded!

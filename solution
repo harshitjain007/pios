@@ -1,0 +1,102 @@
+	
+Missing code to print octal numbers 
+	num = getuint(&ap, lflag); 
+	base = 8 ;
+	goto number;
+
+1. vcprintf() calls vprintfmt() inside it with the the 'fmt' string, 'va_list' of arguments, string buffer 'b', and 'putch' function as its arguments. The vprintfmt() function traverses through each char of this fmt string and if it find the '%' char then it depending upon the type of char, it extracts the corresponding variable from the va_list and prints it.
+
+2. The following piece of code handles that display mechanism does not go out of the screen.
+	1      if (crt_pos >= CRT_SIZE) {					//check if current_position is within the screen.
+	2              int i;
+	3              memcpy(crt_buf, crt_buf + CRT_COLS,			//copies that 
+	4			(CRT_SIZE - CRT_COLS) * sizeof(uint16_t));
+	5              for (i = CRT_SIZE - CRT_COLS; i < CRT_SIZE; i++)
+	6                      crt_buf[i] = 0x0700 | ' ';
+	7              crt_pos -= CRT_COLS;
+	8      }
+	
+	
+3. 
+	fmt points to "x %d, y %x, z %d\n"
+	ap points to char array of arguments list  "x,y,z"
+	
+	cprintf() -> vcprintf() -> {
+	vprintfmt -> 
+	{
+	{putch()},							// for 'x'
+	{putch()},							// for ' '
+	{{getint()->va_arg()}, {printnum()->putch()}},			//for "%d"
+	{putch()},							// for ','
+	{putch()},							// for ' '
+	{putch()},							// for 'y'
+	{putch()},							// for ' '
+	{{getuint()->va_arg()}, {printnum()->putch()}},		//for "%x"
+	{putch()},							// for ','
+	{putch()},							// for ' '
+	{putch()},							// for 'z'
+	{putch()},							// for ' '
+	{{getuint()->va_arg()}, {printnum()->putch()}},		//for "%d"
+	}, c_puts()
+	}
+	
+argument for cputs is pointer to the string "x %d, y %x, z %d\n"
+arguments for the vcprintf are pointer to the string "x %d, y %x, z %d\n" and pionter to the char array of arguments " x, y, z"
+	
+4. 	
+	
+
+5. y = 3 . Because va_arg is implemented in such a way that if it called more times than the no. of arguments in the list, then for the first argument not in the
+ list it will print the last argument in the list, and then for next unseen argument it will print 0 and then any garbage value from next onwards.	
+
+6. 
+
+//---------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+The Stack
+
+Ex2. Kernel initialises its stack at 0x106000 = 1048kB
+eax            0x10000c	1048588
+ecx            0x0	0
+edx            0x40	64
+ebx            0x10094	65684
+esp            0x105ffc	0x105ffc
+ebp            0x0	0x0
+esi            0x10094	65684
+edi            0x0	0
+eip            0x100093	0x100093 <init>
+eflags         0x6	[ PF ]
+cs             0x8	8
+ss             0x10	16
+ds             0x10	16
+es             0x10	16
+fs             0x10	16
+gs             0x10	16
+
+
+Ex 3
+#0  debug_trace (ebp=1072840, eips=0x105f28) at kern/debug.c:73
+#1  0x00100498 in f3 (r=0, e=0x105f28) at kern/debug.c:77
+#2  0x001004d0 in f2 (r=0, e=0x105f28) at kern/debug.c:78
+#3  0x00100508 in f1 (r=0, e=0x105f28) at kern/debug.c:79
+#4  0x00100541 in debug_check () at kern/debug.c:90
+#5  0x001000e8 in init () at kern/init.c:55
+#6  0x00100024 in start () at kern/entry.S:44
+
+
+0x105e80 <cpu_boot+3712>:	0x00105ebc	0x00105e98	0x00102e13	0x00105fe8
+0x105e90 <cpu_boot+3728>:	0x00000000	0x00000000	0x00105ec8	0x00100498
+0x105ea0 <cpu_boot+3744>:	0x00105ec8	0x00105f28	0x6c616d69	0x20736920
+0x105eb0 <cpu_boot+3760>:	0x32323332	0x74636f20	0x0a216c61	0x00105ec8
+0x105ec0 <cpu_boot+3776>:	0x00000000	0x00000000	0x00105ee8	0x001004d0
+0x105ed0 <cpu_boot+3792>:	0x00000000	0x00105f28	0x00000000	0x00000000
+0x105ee0 <cpu_boot+3808>:	0x00000000	0x00000000	0x00105f08	0x00100508
+0x105ef0 <cpu_boot+3824>:	0x00000000	0x00105f28	0x00000000	0x00000000
+0x105f00 <cpu_boot+3840>:	0x00000000	0x00000000	0x00105fd8	0x00100541
+0x105f10 <cpu_boot+3856>:	0x00000000	0x00105f28	0x00000000	0x00000000
+0x105f20 <cpu_boot+3872>:	0x00000000	0x00000000	0x00000000	0x00000000
+0x105f30 <cpu_boot+3888>:	0x00000000	0x00000000	0x00000000	0x00000000
+0x105f40 <cpu_boot+3904>:	0x00000000	0x00000000
+
+
+
